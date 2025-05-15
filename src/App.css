@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definición de colores */
+:root {
+  --verde-delmonte: #006747; /* Verde */
+  --rojo-delmonte: #e60012; /* Rojo */
+  --amarillo-delmonte: #ffcb05; /* Amarillo */
+  --blanco: #ffffff; /* Blanco */
+}
+
+/* Estilos generales */
+body {
+  background-color: var(--blanco);
+  color: var(--verde-delmonte);
+}
+
+/* Para los botones */
+button {
+  background-color: var(--rojo-delmonte);
+  color: var(--blanco);
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: var(--amarillo-delmonte);
+  cursor: pointer;
+}
+
+/* Otros estilos que necesites */
+.header {
+  background-color: var(--verde-delmonte);
+  color: var(--blanco);
+  padding: 20px;
+  text-align: center;
+}
+
+footer {
+  background-color: var(--rojo-delmonte);
+  color: var(--blanco);
+  text-align: center;
+  padding: 10px;
+}
+/* Menu estilos */
+.productos-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.producto {
+  text-align: center;
+}
+
+.producto-boton {
+  background-color: #4CAF50;  /* Color del botón */
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.producto-boton:hover {
+  transform: scale(1.05);
+}
+
+.producto-boton img {
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.producto-boton div {
+  margin-top: 5px;
+}
+
+.producto-boton {
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.producto-boton img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* En tu archivo CSS global (index.css o App.css) */
+.ticket {
+  background-color: #4CAF50; /* Verde para indicar éxito */
+  color: white;
+  padding: 15px;
+  margin-top: 20px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
