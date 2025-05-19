@@ -19,13 +19,13 @@ function Clientes() {
 
   // Función para cargar los clientes
   const fetchClientes = async () => {
-    const response = await axios.get('http://localhost:8080/api/clientes');
+    const response = await axios.get('https://comedor-app-backend.onrender.com/api/clientes');
     setClientes(response.data);
   };
 
   // Función para eliminar cliente
   const eliminarCliente = async (id) => {
-    await axios.delete(`http://localhost:8080/api/clientes/${id}`);
+    await axios.delete(`https://comedor-app-backend.onrender.com/api/clientes/${id}`);
     fetchClientes(); // Actualizar la lista después de eliminar
   };
 
@@ -66,7 +66,7 @@ function Clientes() {
     try {
       if (isEditando) {
         // Actualizar cliente existente
-        await axios.put(`http://localhost:8080/api/clientes/${clienteId}`, {
+        await axios.put(`https://comedor-app-backend.onrender.com/api/clientes/${clienteId}`, {
           nombre,
           claveEmpleado,
           saldo: parseFloat(saldo) || 0
@@ -74,7 +74,7 @@ function Clientes() {
         setMensaje('Cliente actualizado correctamente');
       } else {
         // Registrar cliente nuevo
-        await axios.post('http://localhost:8080/api/clientes', {
+        await axios.post('https://comedor-app-backend.onrender.com/api/clientes', {
           nombre,
           claveEmpleado,
           saldo: parseFloat(saldo) || 0

@@ -6,9 +6,9 @@ const CortesGuardados = () => {
   const [resumenSeleccionado, setResumenSeleccionado] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/corte-de-caja/guardados")
+    axios.get("https://comedor-app-backend.onrender.com/api/corte-de-caja/guardados")
       .then((response) => {
-        setCortes(response.data); // debe ser un arreglo
+        setCortes(response.data);
       })
       .catch((error) => {
         console.error("Error al obtener cortes guardados", error);
@@ -16,9 +16,9 @@ const CortesGuardados = () => {
   }, []);
 
   const verResumen = (idCorte) => {
-    axios.get(`http://localhost:8080/api/corte-de-caja/detalle/${idCorte}`)
+    axios.get(`https://comedor-app-backend.onrender.com/api/corte-de-caja/detalle/${idCorte}`)
       .then((response) => {
-        setResumenSeleccionado(response.data); // ResumenEmpleadoDTO[]
+        setResumenSeleccionado(response.data);
       })
       .catch((error) => {
         console.error("Error al obtener detalle del corte", error);
@@ -44,9 +44,9 @@ const CortesGuardados = () => {
               <td className="py-3 px-6 text-left">{new Date(corte.fecha).toLocaleString()}</td>
               <td className="py-3 px-6 text-left">${corte.total.toFixed(2)}</td>
               <td className="py-3 px-6 text-center">
-              <button onClick={() => verResumen(corte.id)} className="bg-blue-500 text-white px-3 py-1 rounded mr-2">Ver resumen</button>
-                <a href={`http://localhost:8080/api/corte-de-caja/descargar/pdf/${corte.id}`} className="bg-green-500 text-white px-3 py-1 rounded mr-2">PDF</a>
-                <a href={`http://localhost:8080/api/corte-de-caja/descargar/excel/${corte.id}`} className="bg-yellow-500 text-white px-3 py-1 rounded">Excel</a>
+                <button onClick={() => verResumen(corte.id)} className="bg-blue-500 text-white px-3 py-1 rounded mr-2">Ver resumen</button>
+                <a href={`https://comedor-app-backend.onrender.com/api/corte-de-caja/descargar/pdf/${corte.id}`} className="bg-green-500 text-white px-3 py-1 rounded mr-2">PDF</a>
+                <a href={`https://comedor-app-backend.onrender.com/api/corte-de-caja/descargar/excel/${corte.id}`} className="bg-yellow-500 text-white px-3 py-1 rounded">Excel</a>
               </td>
             </tr>
           ))}

@@ -15,7 +15,7 @@ function EscaneoCliente() {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/api/clientes/buscar/${clave}`);
+      const response = await fetch(`https://comedor-app-backend.onrender.com/api/clientes/buscar/${clave}`);
       if (response.ok) {
         const cliente = await response.json();
         navigate("/menu", { state: { cliente } });

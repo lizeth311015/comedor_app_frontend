@@ -1,51 +1,51 @@
 import axios from 'axios';
 
-// Función para listar usuarios
+// Base URL de la API, desde .env o fallback a localhost
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+
+/**
+ * Lista todos los usuarios (requiere sesión).
+ * @returns {Promise<AxiosResponse>} Respuesta Axios con arreglo de usuarios.
+ */
 export const listarUsuarios = () => {
-  return axios.get('/api/auth/usuarios', { withCredentials: true });
+  return axios.get(`${API_BASE_URL}/auth/usuarios`, { withCredentials: true });
 };
 
-// Función para crear un nuevo usuario
-// services/usuarioService.js
-
+/**
+ * Crea un nuevo usuario.
+ * @param {{ nombre: string, password: string, rol: string }} usuario
+ * @returns {Promise<string>} Mensaje de confirmación.
+ */
 export const crearUsuario = async (usuario) => {
-  const response = await fetch("http://localhost:8080/api/auth/crear-usuario", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include", // para que se envíe la cookie de sesión
-    body: JSON.stringify(usuario),
-  });
-
+  const response = await fetch(
+    `${API_BASE_URL}/auth/crear-usuario`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify(usuario),
+    }
+  );
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(errorText);
   }
-
-  return response.text(); // "Usuario creado"
+  return response.text();
 };
 
-
-// Puedes agregar otras funciones como eliminar, editar, etc.
-const eliminarUsuario = async (id) => {
+/**
+ * Elimina un usuario por ID (requiere confirmación y sesión).
+ * @param {string|number} id
+ * @returns {Promise<void>}
+ */
+export const eliminarUsuario = async (id) => {
   if (!window.confirm("¿Estás seguro de eliminar este usuario?")) return;
-
-  try {
-    const response = await fetch(`http://localhost:8080/api/auth/usuarios/${id}`, {
-      method: "DELETE",
-      credentials: "include",
-    });
-
-    if (response.ok) {
-      alert("Usuario eliminado con éxito");
-      obtenerUsuarios(); // Recargar la lista
-    } else {
-      const errorText = await response.text();
-      alert("Error al eliminar: " + errorText);
-    }
-  } catch (error) {
-    console.error("Error al eliminar usuario:", error);
+  const response = await fetch(
+    `https://comedor-app-backend.onrender.com/auth/usuarios/${id}`,
+    { method: "DELETE", credentials: "include" }
+  );
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText);
   }
 };
-

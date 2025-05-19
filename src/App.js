@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -18,6 +17,7 @@ import Footer from "./components/Footer";
 import PrivateRoute from "./utils/PrivateRoute";
 import UsuariosAdmin from './views/UsuariosAdmin';
 import ArchivosCorte from './components/ArchivosCorte'; 
+
 function App() {
   const [usuario, setUsuario] = useState(null);
   const location = useLocation();
@@ -37,7 +37,11 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      await axios.post("/api/auth/logout", {}, { withCredentials: true });
+      await axios.post(
+        "https://comedor-app-backend.onrender.com/api/auth/logout",
+        {},
+        { withCredentials: true }
+      );
       localStorage.removeItem("usuario");
       setUsuario(null);
       navigate("/login");

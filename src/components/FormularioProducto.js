@@ -16,7 +16,7 @@ function FormularioProducto({ onProductoRegistrado }) {
     }
 
     try {
-      await axios.post(`http://localhost:8080/api/productos`, formData, {
+      await axios.post(`https://comedor-app-backend.onrender.com/api/productos`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

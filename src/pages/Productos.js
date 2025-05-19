@@ -6,24 +6,22 @@ function Productos() {
   const [nombre, setNombre] = useState('');
   const [precio, setPrecio] = useState('');
   const [imagen, setImagen] = useState(null);
-  const [productoSeleccionado, setProductoSeleccionado] = useState(null); // Estado para el producto seleccionado para editar
+  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [mensaje, setMensaje] = useState('');
 
-  // Cargar productos al iniciar
   useEffect(() => {
     fetchProductos();
   }, []);
 
   const fetchProductos = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/productos');
+      const response = await axios.get('https://comedor-app-backend.onrender.com/api/productos');
       setProductos(response.data);
     } catch (error) {
       console.error('Error al obtener los productos:', error);
     }
   };
 
-  // Función para manejar el envío del formulario
   const manejarEnvio = async (e) => {
     e.preventDefault();
   
@@ -41,43 +39,39 @@ function Productos() {
   
     try {
       if (productoSeleccionado) {
-        // Si hay un producto seleccionado, actualizarlo
-        await axios.put(`http://localhost:8080/api/productos/${productoSeleccionado.id}`, formData, {
+        await axios.put(`https://comedor-app-backend.onrender.com/api/productos/${productoSeleccionado.id}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
         setMensaje('Producto actualizado correctamente');
       } else {
-        // Si no hay producto seleccionado, registrar uno nuevo
-        await axios.post('http://localhost:8080/api/productos', formData);
+        await axios.post('https://comedor-app-backend.onrender.com/api/productos', formData);
         setMensaje('Producto registrado correctamente');
       }
   
-      fetchProductos(); // Recargar la lista de productos
+      fetchProductos();
       setNombre('');
       setPrecio('');
       setImagen(null);
-      setProductoSeleccionado(null); // Limpiar la selección de producto
+      setProductoSeleccionado(null);
     } catch (error) {
       setMensaje('Error al registrar o actualizar el producto');
       console.error(error);
     }
   };
   
-  // Función para editar un producto
   const editarProducto = (producto) => {
     setProductoSeleccionado(producto);
     setNombre(producto.nombre);
     setPrecio(producto.precio);
-    setImagen(producto.imagen); // Si ya tiene imagen, se muestra
+    setImagen(producto.imagen);
   };
 
-  // Función para eliminar un producto
   const eliminarProducto = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/api/productos/${id}`);
-      fetchProductos(); // Recargar la lista de productos
+      await axios.delete(`https://comedor-app-backend.onrender.com/api/productos/${id}`);
+      fetchProductos();
     } catch (error) {
       setMensaje('Error al eliminar el producto');
     }
@@ -85,7 +79,6 @@ function Productos() {
 
   return (
     <div className="p-6">
-      {/* Formulario de Producto */}
       <h2 className="text-2xl font-bold mb-4">{productoSeleccionado ? 'Editar Producto' : 'Registrar Producto'}</h2>
       <form onSubmit={manejarEnvio} encType="multipart/form-data">
         <div className="mb-4">
@@ -125,7 +118,6 @@ function Productos() {
       </form>
       {mensaje && <p className="mt-4 text-center">{mensaje}</p>}
 
-      {/* Lista de Productos */}
       <h2 className="text-2xl font-bold mt-10 mb-4">Lista de Productos</h2>
       <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
         <thead className="bg-gray-200 text-gray-700">
@@ -146,7 +138,7 @@ function Productos() {
               <td className="py-2 px-4">
                 {producto.imagen && (
                   <img
-                    src={`http://localhost:8080${producto.imagen}`}
+                    src={`https://comedor-app-backend.onrender.com${producto.imagen}`}
                     alt={producto.nombre}
                     className="w-20 h-20 object-cover"
                   />

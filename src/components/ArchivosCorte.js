@@ -8,7 +8,7 @@ const ArchivosCorte = () => {
   useEffect(() => {
     const fetchArchivos = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/corte-de-caja/archivos');
+        const response = await axios.get('https://comedor-app-backend.onrender.com/api/corte-de-caja/archivos');
         if (Array.isArray(response.data)) {
           setArchivos(response.data);
         } else {
@@ -26,7 +26,7 @@ const ArchivosCorte = () => {
   }, []);
 
   const verArchivo = (id) => {
-    window.open(`http://localhost:8080/api/corte-de-caja/archivo/${id}`, '_blank');
+    window.open(`https://comedor-app-backend.onrender.com/api/corte-de-caja/archivo/${id}`, '_blank');
   };
 
   return (

@@ -9,30 +9,29 @@ function Login({ onLogin }) {
 
   const navigate = useNavigate();
 
+  // URL base del backend
+  const backendUrl = "https://comedor-app-backend.onrender.com";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // Reseteamos el error antes de intentar el login
+    setError("");
 
     try {
-      // Realizamos la solicitud al backend para autenticar al usuario
-      const response = await axios.post("/api/auth/login", {
-        nombre,
-        password,
-      }, {
-        withCredentials: true // Asegura que las cookies de sesión viajen si el backend las usa
-      });
+      const response = await axios.post(
+        `${backendUrl}/api/auth/login`,
+        { nombre, password },
+        { withCredentials: true } // cookies para sesión
+      );
 
       const userData = response.data;
 
-      // Verificar si la respuesta contiene los datos esperados (nombre, rol)
       if (!userData || !userData.rol) {
         throw new Error("Datos del usuario no válidos");
       }
 
-      // Guardamos los datos del usuario en el localStorage
       localStorage.setItem("usuario", JSON.stringify(userData));
-      onLogin(userData); // Llamamos a la función onLogin para actualizar el estado en App.js
-      navigate("/escaneo"); // Redirigimos al usuario a la página de menú
+      onLogin(userData);
+      navigate("/escaneo");
     } catch (err) {
       setError("Usuario o contraseña incorrectos");
     }
@@ -41,11 +40,10 @@ function Login({ onLogin }) {
   return (
     <div className="flex justify-center items-center h-screen bg-green-100">
       <div className="bg-white p-8 rounded shadow-md w-96 flex flex-col items-center">
-        {/* Imagen alusiva al inicio de sesión */}
         <img
-          src="/images/inicioDeSecion.png" // Cambia el nombre por el nombre de tu imagen
+          src="/images/inicioDeSecion.png"
           alt="Inicio de sesión"
-          className="w-16 h-16 mb-6" // Ajusta el tamaño de la imagen según necesites
+          className="w-16 h-16 mb-6"
         />
 
         <form onSubmit={handleSubmit} className="w-full">
@@ -82,11 +80,10 @@ function Login({ onLogin }) {
           </button>
         </form>
 
-        {/* Imagen debajo del formulario */}
         <img
-          src="/images/LogoArchiDelMonte.png" // Cambia el nombre por el nombre de tu imagen
+          src="/images/LogoArchiDelMonte.png"
           alt="Bienvenido"
-          className="w-32 h-32 mt-6" // Ajusta el tamaño de la imagen según necesites
+          className="w-32 h-32 mt-6"
         />
       </div>
     </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
-import ArchivosCorte from './ArchivosCorte'; // Importar el componente ArchivosCorte
+import ArchivosCorte from './ArchivosCorte';
 
 const CorteDeCaja = () => {
   const [reporte, setReporte] = useState([]);
@@ -20,14 +20,14 @@ const CorteDeCaja = () => {
   };
 
   const generarReporte = () => {
-    fetch('http://localhost:8080/api/corte-de-caja/reporte-agrupado')
+    fetch('https://comedor-app-backend.onrender.com/api/corte-de-caja/reporte-agrupado')
       .then(res => res.json())
       .then(data => {
         const esValido = validarReporte(data);
         setReporte(data);
         setReporteValido(esValido);
-        setPdfExportado(false); // reiniciar estado
-        setExcelExportado(false); // reiniciar estado
+        setPdfExportado(false);
+        setExcelExportado(false);
         const total = data.reduce((sum, item) => sum + item.totalGastado, 0);
         setTotalGeneral(total);
         setMensaje(esValido ? 'Reporte generado correctamente.' : 'El reporte contiene datos incompletos.');
@@ -44,7 +44,7 @@ const CorteDeCaja = () => {
       return;
     }
 
-    fetch('http://localhost:8080/api/corte-de-caja/guardar', { method: 'POST' })
+    fetch('https://comedor-app-backend.onrender.com/api/corte-de-caja/guardar', { method: 'POST' })
       .then(res => res.text())
       .then(msg => {
         setMensaje(msg);
@@ -194,8 +194,7 @@ const CorteDeCaja = () => {
         </div>
       )}
 
-      {/* Aquí se renderiza el componente de archivos generados */}
-      <ArchivosCorte reporte={reporte} />
+      <ArchivosCorte />
     </div>
   );
 };

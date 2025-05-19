@@ -14,7 +14,7 @@ const Usuarios = () => {
 
   const cargarUsuarios = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/api/auth/usuarios', { withCredentials: true });
+      const res = await axios.get('https://comedor-app-backend.onrender.com/api/auth/usuarios', { withCredentials: true });
       setUsuarios(res.data);
     } catch (err) {
       console.error('Error al cargar usuarios:', err);
@@ -23,7 +23,7 @@ const Usuarios = () => {
 
   const crearUsuario = async () => {
     try {
-      await axios.post('http://localhost:8080/api/auth/crear-usuario', nuevoUsuario, { withCredentials: true });
+      await axios.post('https://comedor-app-backend.onrender.com/api/auth/crear-usuario', nuevoUsuario, { withCredentials: true });
       setNuevoUsuario({ nombre: '', password: '', rol: 'USER' });
       cargarUsuarios();
     } catch (err) {
@@ -36,7 +36,7 @@ const Usuarios = () => {
     if (!window.confirm('¿Estás seguro de eliminar este usuario?')) return;
 
     try {
-      await axios.delete(`http://localhost:8080/api/auth/usuarios/${id}`, { withCredentials: true });
+      await axios.delete(`https://comedor-app-backend.onrender.com/api/auth/usuarios/${id}`, { withCredentials: true });
       cargarUsuarios();
     } catch (err) {
       console.error('Error al eliminar usuario:', err);
@@ -46,7 +46,7 @@ const Usuarios = () => {
   const editarUsuario = async () => {
     try {
       await axios.put(
-        `http://localhost:8080/api/auth/usuarios/${usuarioEditado.id}`,
+        `https://comedor-app-backend.onrender.com/api/auth/usuarios/${usuarioEditado.id}`,
         usuarioEditado,
         { withCredentials: true }
       );

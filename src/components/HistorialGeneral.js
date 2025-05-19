@@ -7,12 +7,14 @@ const HistorialGeneral = () => {
   const [paginaActual, setPaginaActual] = useState(1);
   const elementosPorPagina = 20;
 
+  const backendUrl = 'https://comedor-app-backend.onrender.com';
+
   useEffect(() => {
     fetchPedidos();
   }, []);
 
   const fetchPedidos = () => {
-    fetch('/api/pedidos/todos')
+    fetch(`${backendUrl}/api/pedidos/todos`)
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -31,7 +33,7 @@ const HistorialGeneral = () => {
   const eliminarPedido = (pedidoId) => {
     if (!window.confirm('¿Estás seguro de que deseas eliminar este pedido?')) return;
 
-    fetch(`/api/pedidos/eliminar/${pedidoId}`, {
+    fetch(`${backendUrl}/api/pedidos/eliminar/${pedidoId}`, {
       method: 'DELETE'
     })
       .then(response => response.json())
@@ -102,7 +104,6 @@ const HistorialGeneral = () => {
             </tbody>
           </table>
 
-          {/* Paginación estilo libro */}
           <div className="flex justify-center items-center mt-6 gap-4">
             <button
               onClick={() => cambiarPagina(paginaActual - 1)}

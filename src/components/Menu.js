@@ -13,7 +13,7 @@ function Menu() {
   useEffect(() => {
     const fetchProductos = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/productos");
+        const response = await fetch("https://comedor-app-backend.onrender.com/api/productos");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -41,7 +41,7 @@ function Menu() {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/api/pedidos/registrar", {
+      const response = await fetch("https://comedor-app-backend.onrender.com/api/pedidos/registrar", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -58,49 +58,42 @@ function Menu() {
       }
       const data = await response.json();
 
-const playBeep = () => {
-  const audio = new Audio("/sounds/notificacion.wav");
-  audio.play();
-};
+      const playBeep = () => {
+        const audio = new Audio("/sounds/notificacion.wav");
+        audio.play();
+      };
 
-// Crear el contenido del ticket
-const ticketContent = `
-  <div style="text-align:center; font-family: Arial, sans-serif;">
-    <img src="/images/logoComidadAppBN.PNG" alt="Logo" style="width: 100px; margin-bottom: 10px;" />
-    <h2 style="margin:0;">TICKET DE COMPRA</h2>
-    <hr style="margin: 10px 0;" />
-    <p><strong>Cliente:</strong> ${cliente.nombre}</p>
-    <p><strong>Producto:</strong> ${producto.nombre}</p>
-    <p><strong>Precio:</strong> $${producto.precio.toFixed(2)}</p>
-    <p><strong>Saldo acumulado:</strong> $${data.nuevoSaldo.toFixed(2)}</p>
-    <p><strong>ID del Pedido:</strong> ${data.pedidoId}</p>
-    <p><strong>Hora:</strong> ${new Date(data.fecha).toLocaleString()}</p>
-    <hr style="margin: 10px 0;" />
-    <h3 style="margin-top: 20px;">¡Gracias por tu compra!</h3>
-    <p style="font-style: italic;">¡Buen provecho! 😋</p>
-  </div>
-`;
+      const ticketContent = `
+        <div style="text-align:center; font-family: Arial, sans-serif;">
+          <img src="/images/logoComidadAppBN.PNG" alt="Logo" style="width: 100px; margin-bottom: 10px;" />
+          <h2 style="margin:0;">TICKET DE COMPRA</h2>
+          <hr style="margin: 10px 0;" />
+          <p><strong>Cliente:</strong> ${cliente.nombre}</p>
+          <p><strong>Producto:</strong> ${producto.nombre}</p>
+          <p><strong>Precio:</strong> $${producto.precio.toFixed(2)}</p>
+          <p><strong>Saldo acumulado:</strong> $${data.nuevoSaldo.toFixed(2)}</p>
+          <p><strong>ID del Pedido:</strong> ${data.pedidoId}</p>
+          <p><strong>Hora:</strong> ${new Date(data.fecha).toLocaleString()}</p>
+          <hr style="margin: 10px 0;" />
+          <h3 style="margin-top: 20px;">¡Gracias por tu compra!</h3>
+          <p style="font-style: italic;">¡Buen provecho! 😋</p>
+        </div>
+      `;
 
-const printWindow = window.open("", "PRINT", "height=600,width=400");
-if (printWindow) {
-  printWindow.document.write(`<html><head><title>Ticket</title></head><body>${ticketContent}</body></html>`);
-  printWindow.document.close();
-  printWindow.focus();
+      const printWindow = window.open("", "PRINT", "height=600,width=400");
+      if (printWindow) {
+        printWindow.document.write(`<html><head><title>Ticket</title></head><body>${ticketContent}</body></html>`);
+        printWindow.document.close();
+        printWindow.focus();
 
-  // 🔊 Reproduce el sonido ANTES de imprimir
-  playBeep();
+        playBeep();
+        printWindow.print();
 
-  // 🖨️ Imprime solo el ticket
-  printWindow.print();
+        setTimeout(() => {
+          printWindow.close();
+        }, 2000);
+      }
 
-  // ⏱️ Cierra la ventana de impresión después de 2 segundos
-  setTimeout(() => {
-    printWindow.close();
-  }, 2000); // 2000 milisegundos (2 segundos)
-}
-
-
-      // Limpiar y navegar
       localStorage.removeItem("clienteActual");
       navigate("/escaneo");
     } catch (e) {
