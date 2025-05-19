@@ -16,7 +16,7 @@ import NotAuthorized from "./components/NotAuthorized";
 import Footer from "./components/Footer";
 import PrivateRoute from "./utils/PrivateRoute";
 import UsuariosAdmin from './views/UsuariosAdmin';
-import ArchivosCorte from './components/ArchivosCorte'; 
+import ArchivosCorte from './components/ArchivosCorte';
 
 function App() {
   const [usuario, setUsuario] = useState(null);
@@ -52,8 +52,9 @@ function App() {
 
   const ocultarNavbar = location.pathname === "/login";
 
-  if (!usuario && location.pathname !== "/login") {
-    return null;
+  // Redirigir al menú si ya está logueado y va a /login
+  if (usuario && location.pathname === "/login") {
+    return <Navigate to="/menu" replace />;
   }
 
   return (
